@@ -30,11 +30,11 @@ extension Clients {
     func listClientConnectorServices(
       request: ListClientConnectorServicesRequest, options: GoogleCloudGax.RequestOptions
     ) async throws
-      -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+      -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
 
     func getClientConnectorService(
       request: GetClientConnectorServiceRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService
+    ) async throws -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService
 
     func createClientConnectorService(
       request: CreateClientConnectorServiceRequest, options: GoogleCloudGax.RequestOptions
@@ -96,7 +96,7 @@ extension Clients {
     public func listClientConnectorServices(
       request: ListClientConnectorServicesRequest, options: GoogleCloudGax.RequestOptions
     ) async throws
-      -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+      -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
     {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
@@ -117,13 +117,13 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse.self,
+        GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse.self,
         from: data)
     }
 
     public func getClientConnectorService(
       request: GetClientConnectorServiceRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService {
+    ) async throws -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -138,7 +138,7 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService.self, from: data)
+        GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService.self, from: data)
     }
 
     public func createClientConnectorService(

@@ -24,54 +24,48 @@ import GoogleIAMV1
 import GoogleLongrunning
 import GoogleRpc
 import GoogleCloudGax
-import struct Logging.Logger
 
 extension Clients {
-  final class ClientConnectorServicesServiceLogging: ClientConnectorServicesServiceStub {
+  final class ClientConnectorServicesServiceRetry: ClientConnectorServicesServiceStub {
     let inner: any ClientConnectorServicesServiceStub
-    let logger: Logger
+    let options: GoogleCloudGax.ClientOptions
 
-    public init(_ inner: any ClientConnectorServicesServiceStub, logger: Logger) {
-      var logger = logger
-      logger[metadataKey: "gcp.artifact.id"] = "google-cloud-beyondcorp-clientconnectorservices-v1"
-      logger[metadataKey: "gcp.client.service"] = "beyondcorp"
-      logger[metadataKey: "gcp.experimental.swift.client"] = "ClientConnectorServicesService"
+    public init(
+      _ inner: any ClientConnectorServicesServiceStub, options: GoogleCloudGax.ClientOptions
+    ) {
       self.inner = inner
-      self.logger = logger
+      self.options = options
     }
 
     func _intercept<Input, Output>(
       request: Input,
       options: GoogleCloudGax.RequestOptions,
-      name: Swift.String,
+      idempotent: Swift.Bool,
       action: (Input, GoogleCloudGax.RequestOptions) async throws -> Output,
     ) async throws -> Output {
-      var logger = logger
-      logger[metadataKey: "gcp.experimental.swift.request.id"] = "\(UUID())"
-      logger[metadataKey: "gcp.experimental.swift.method"] = .string(name)
-      logger.debug("enter  : \(request) \(options)")
-      do {
-        let output = try await action(request, options)
-        logger.debug("success: \(request) \(options) \(output)")
-        return output
-      } catch let error {
-        logger.debug("error  : \(request) \(options) \(error)")
-        throw error
+      let loop = GoogleCloudGax._RetryLoop(
+        options: options, withDefault: self.options, idempotent: idempotent,
+      )
+      let attempt = { (attemptTimeout: Swift.Duration?) async throws -> Output in
+        var attemptOptions = options
+        attemptOptions.attemptTimeout = attemptTimeout
+        return try await action(request, attemptOptions)
       }
+      return try await loop.run(attempt: attempt)
     }
 
     public func listClientConnectorServices(
       request: ListClientConnectorServicesRequest, options: GoogleCloudGax.RequestOptions
     ) async throws
-      -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+      -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
     {
       try await self._intercept(
         request: request,
         options: options,
-        name: "listClientConnectorServices",
+        idempotent: true,
         action: {
           (r: ListClientConnectorServicesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+            -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
           in
           return try await self.inner.listClientConnectorServices(request: r, options: o)
         })
@@ -79,14 +73,14 @@ extension Clients {
 
     public func getClientConnectorService(
       request: GetClientConnectorServiceRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService {
+    ) async throws -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService {
       try await self._intercept(
         request: request,
         options: options,
-        name: "getClientConnectorService",
+        idempotent: true,
         action: {
           (r: GetClientConnectorServiceRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService
+            -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService
           in
           return try await self.inner.getClientConnectorService(request: r, options: o)
         })
@@ -98,7 +92,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "createClientConnectorService",
+        idempotent: false,
         action: {
           (r: CreateClientConnectorServiceRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongrunning.Operation
@@ -113,7 +107,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "updateClientConnectorService",
+        idempotent: false,
         action: {
           (r: UpdateClientConnectorServiceRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongrunning.Operation
@@ -128,7 +122,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "deleteClientConnectorService",
+        idempotent: false,
         action: {
           (r: DeleteClientConnectorServiceRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongrunning.Operation
@@ -143,7 +137,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "listLocations",
+        idempotent: true,
         action: {
           (r: GoogleCloudLocation.ListLocationsRequest, o: GoogleCloudGax.RequestOptions)
             async throws -> GoogleCloudLocation.ListLocationsResponse
@@ -158,7 +152,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "getLocation",
+        idempotent: true,
         action: {
           (r: GoogleCloudLocation.GetLocationRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleCloudLocation.Location
@@ -173,7 +167,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "setIamPolicy",
+        idempotent: false,
         action: {
           (r: GoogleIAMV1.SetIamPolicyRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleIAMV1.Policy
@@ -188,7 +182,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "getIamPolicy",
+        idempotent: true,
         action: {
           (r: GoogleIAMV1.GetIamPolicyRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleIAMV1.Policy
@@ -203,7 +197,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "testIamPermissions",
+        idempotent: false,
         action: {
           (r: GoogleIAMV1.TestIamPermissionsRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleIAMV1.TestIamPermissionsResponse
@@ -218,7 +212,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "listOperations",
+        idempotent: true,
         action: {
           (r: GoogleLongrunning.ListOperationsRequest, o: GoogleCloudGax.RequestOptions)
             async throws -> GoogleLongrunning.ListOperationsResponse
@@ -233,7 +227,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "getOperation",
+        idempotent: true,
         action: {
           (r: GoogleLongrunning.GetOperationRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongrunning.Operation
@@ -248,7 +242,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "deleteOperation",
+        idempotent: false,
         action: {
           (r: GoogleLongrunning.DeleteOperationRequest, o: GoogleCloudGax.RequestOptions)
             async throws -> Void in
@@ -262,7 +256,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        name: "cancelOperation",
+        idempotent: false,
         action: {
           (r: GoogleLongrunning.CancelOperationRequest, o: GoogleCloudGax.RequestOptions)
             async throws -> Void in

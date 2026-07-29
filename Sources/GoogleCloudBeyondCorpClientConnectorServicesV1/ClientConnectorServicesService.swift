@@ -58,7 +58,7 @@ public class ClientConnectorServicesServiceClient: Clients.ClientConnectorServic
   public func listClientConnectorServices(
     request: ListClientConnectorServicesRequest, options: GoogleCloudGax.RequestOptions
   ) async throws
-    -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+    -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
   {
     try await self.inner.listClientConnectorServices(request: request, options: options)
   }
@@ -71,7 +71,7 @@ public class ClientConnectorServicesServiceClient: Clients.ClientConnectorServic
   ) throws -> any AsyncSequence<ClientConnectorService, Swift.Error> {
     let listRpc = {
       (token: Swift.String) async throws
-        -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse in
+        -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse in
       var request = byItem
       request.pageToken = token
       return try await self.listClientConnectorServices(request: request, options: options)
@@ -84,7 +84,7 @@ public class ClientConnectorServicesServiceClient: Clients.ClientConnectorServic
   /// @Snippet(path: "ClientConnectorServicesService_GetClientConnectorService")
   public func getClientConnectorService(
     request: GetClientConnectorServiceRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService {
+  ) async throws -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService {
     try await self.inner.getClientConnectorService(request: request, options: options)
   }
 
@@ -413,7 +413,7 @@ extension Clients {
   public protocol ClientConnectorServicesServiceProtocol {
     /// See `ClientConnectorServicesServiceClient.listClientConnectorServices`.
     func listClientConnectorServices(request: ListClientConnectorServicesRequest) async throws
-      -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+      -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
 
     /// See `ClientConnectorServicesServiceClient.listClientConnectorServices`.
     func listClientConnectorServices(
@@ -427,12 +427,12 @@ extension Clients {
 
     /// See `ClientConnectorServicesServiceClient.getClientConnectorService`.
     func getClientConnectorService(request: GetClientConnectorServiceRequest) async throws
-      -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService
+      -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService
 
     /// See `ClientConnectorServicesServiceClient.getClientConnectorService`.
     func getClientConnectorService(
       name: Swift.String,
-    ) async throws -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService
+    ) async throws -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService
 
     /// See `ClientConnectorServicesServiceClient.createClientConnectorService`.
     func createClientConnectorService(request: CreateClientConnectorServiceRequest) async throws
@@ -534,7 +534,7 @@ extension Clients {
     func listClientConnectorServices(
       request: ListClientConnectorServicesRequest, options: GoogleCloudGax.RequestOptions
     ) async throws
-      -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+      -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
 
     /// See `ClientConnectorServicesServiceClient.listClientConnectorServices`.
     func listClientConnectorServices(
@@ -544,7 +544,7 @@ extension Clients {
     /// See `ClientConnectorServicesServiceClient.getClientConnectorService`.
     func getClientConnectorService(
       request: GetClientConnectorServiceRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService
+    ) async throws -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService
 
     /// See `ClientConnectorServicesServiceClient.createClientConnectorService`.
     func createClientConnectorService(
@@ -631,7 +631,7 @@ extension Clients {
 // Default implementations
 extension Clients.ClientConnectorServicesServiceProtocol {
   public func listClientConnectorServices(request: ListClientConnectorServicesRequest) async throws
-    -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+    -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
   {
     try await self.listClientConnectorServices(request: request, options: .init())
   }
@@ -639,7 +639,7 @@ extension Clients.ClientConnectorServicesServiceProtocol {
   public func listClientConnectorServices(
     request: ListClientConnectorServicesRequest, options: GoogleCloudGax.RequestOptions
   ) async throws
-    -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse
+    -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse
   {
     throw GoogleCloudGax.RequestError.unimplemented
   }
@@ -655,7 +655,7 @@ extension Clients.ClientConnectorServicesServiceProtocol {
   ) throws -> any AsyncSequence<ClientConnectorService, Swift.Error> {
     let listRpc = {
       (token: Swift.String) async throws
-        -> GoogleCloudBeyondcorpClientconnectorservicesV1.ListClientConnectorServicesResponse in
+        -> GoogleCloudBeyondCorpClientConnectorServicesV1.ListClientConnectorServicesResponse in
       throw GoogleCloudGax.RequestError.unimplemented
     }
     return GoogleCloudGax.PaginatedResponseSequence(listRpc: listRpc)
@@ -671,20 +671,20 @@ extension Clients.ClientConnectorServicesServiceProtocol {
   }
 
   public func getClientConnectorService(request: GetClientConnectorServiceRequest) async throws
-    -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService
+    -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService
   {
     try await self.getClientConnectorService(request: request, options: .init())
   }
 
   public func getClientConnectorService(
     request: GetClientConnectorServiceRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService {
+  ) async throws -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService {
     throw GoogleCloudGax.RequestError.unimplemented
   }
 
   public func getClientConnectorService(
     name: Swift.String,
-  ) async throws -> GoogleCloudBeyondcorpClientconnectorservicesV1.ClientConnectorService {
+  ) async throws -> GoogleCloudBeyondCorpClientConnectorServicesV1.ClientConnectorService {
     let request = GetClientConnectorServiceRequest().with {
       $0.name = name
     }
